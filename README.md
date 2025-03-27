@@ -4,7 +4,7 @@ A web-based sprint timing application designed for athletic training and perform
 
 ## Overview
 
-The Marv Marinovich Sprint Test is a simple but powerful web application for timing sprint workouts with built-in recovery periods. Inspired by training methodologies of renowned athletic trainer Marv Marinovich, this tool helps athletes and coaches perform structured sprint tests with precise timing and recovery management.
+Inspired by training methodologies of renowned athletic trainer Marv Marinovich, this tool helps athletes and coaches perform structured sprint tests with precise timing and recovery management.
 
 ## Features
 
@@ -32,38 +32,5 @@ Enable voice commands by tapping the microphone button. Then use:
 - Say "Start" or "Go" to begin a sprint
 - Say "Finish", "Stop", or "Done" to end a sprint
 
-## Technical Requirements
-
-- Any modern web browser (Chrome, Safari, Firefox, Edge)
-- For voice commands: Chrome or Edge browser on desktop/Android, or Safari on iOS
-- For screen wake lock: Chrome on Android or desktop (may not work on all iOS devices)
-
-## Installation Options
-
-### Option 1: Direct Use
-Simply open the HTML file in a web browser. No installation required.
-
-### Option 2: Web Server Deployment
-Upload the HTML file to any web server or hosting service.
-
-### Option 3: PWA Installation (Coming Soon)
-Future versions will support installation as a Progressive Web App for offline use.
-
-## Privacy
-
-This application:
-- Works entirely on your device
-- Does not send any data to remote servers
-- Stores sprint data only in your browser's local storage
-
-## License
-
-Open source under MIT License.
-
-## Credits
-
 Developed as a training tool for athletes and coaches based on sprint training principles.
 
----
-
-For questions or support, please open an issue on our GitHub repository.
