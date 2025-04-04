@@ -1,833 +1,390 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Marv Marinovich Sprint Test</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+document.addEventListener('DOMContentLoaded', () => {
+    // Configuration
+    const config = {
+        recoveryTime: 60, // seconds
+        audioBase64: { // Renamed for clarity
+            beep: '//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAFAAAGUACFhYWFhYWFhYWFhYWFhYWFhYWFvb29vb29vb29vb29vb29vb29vb3t7e3t7e3t7e3t7e3t7e3t7e3t7f////////////////////////////////8AAAA8TEFNRTMuOTlyAc0AAAAAAAAAABSAJAJAQgAAgAAABlCt2fMmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwAABpAAAACAAADSAAAAETEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=',
+            finish: '//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAALAAAJrwBra2tra2tra2tra2tra2tra2trjo6Ojo6Ojo6Ojo6Ojo6Ojo6OjrW1tbW1tbW1tbW1tbW1tbW1tbXFxcXFxcXFxcXFxcXFxcXFxcXF1dXV1dXV1dXV1dXV1dXV1dXV1eXl5eXl5eXl5eXl5eXl5eXl5eX19fX19fX19fX19fX19fX19fX19f////////////////////////////////8AAAA8TEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//uwxAAAFHHrL/ZkAKRdR6U2dLAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjk5LjVVVVVVVVVVVVVVVVVVVQ==',
+            startRecognized: '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',
+            finishRecognized: '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'
         }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            touch-action: manipulation;
-        }
-        
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .timer-display {
-            font-size: 64px;
-            font-weight: bold;
-            margin: 20px 0;
-            color: #2c3e50;
-            background: white;
-            padding: 15px 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            text-align: center;
-        }
-        
-        .sprint-info {
-            background: white;
-            border-radius: 15px;
-            padding: 15px;
-            width: 100%;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sprint-info h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .sprint-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .status {
-            font-size: 20px;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-        
-        .action-button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 25px 0;
-            font-size: 22px;
-            font-weight: bold;
-            width: 100%;
-            margin: 10px 0;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            user-select: none;
-            -webkit-touch-callout: none;
-        }
-        
-        .action-button:active {
-            background-color: #2980b9;
-            transform: translateY(2px);
-        }
-        
-        .action-button.start {
-            background-color: #2ecc71;
-        }
-        
-        .action-button.start:active {
-            background-color: #27ae60;
-        }
-        
-        .action-button:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
-        
-        .toggle-button {
-            background-color: #9b59b6;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 15px;
-            font-size: 16px;
-            font-weight: bold;
-            margin: 10px 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .toggle-button.active {
-            background-color: #8e44ad;
-        }
-        
-        .toggle-button .icon {
-            margin-right: 8px;
-            font-size: 18px;
-        }
-        
-        .sprint-results {
-            margin-top: 20px;
-            width: 100%;
-            max-height: 30vh;
-            overflow-y: auto;
-            background: white;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sprint-results h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .results-table th, .results-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .recovery-progress {
-            width: 100%;
-            height: 10px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .recovery-bar {
-            height: 100%;
-            width: 0%;
-            background-color: #3498db;
-            border-radius: 5px;
-            transition: width 1s linear;
-        }
-        
-        .status-indicators {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 12px;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        .voice-status {
-            display: flex;
-            align-items: center;
-        }
-        
-        .voice-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #e74c3c;
-            margin-right: 8px;
-        }
-        
-        .voice-indicator.active {
-            background-color: #2ecc71;
-        }
-        
-        .voice-indicator.listening {
-            animation: pulse 1.5s infinite;
-        }
-        
-        .voice-feedback {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px 40px;
-            border-radius: 30px;
-            font-size: 24px;
-            font-weight: bold;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        
-        .voice-feedback.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212;
-                color: #f5f5f5;
-            }
-            
-            .timer-display, .sprint-info, .sprint-results {
-                background: #1e1e1e;
-                color: #f5f5f5;
-            }
-            
-            .sprint-number {
-                color: #3498db;
-            }
-            
-            .results-table th, .results-table td {
-                border-bottom: 1px solid #333;
-            }
-            
-            .recovery-progress {
-                background-color: #2c3e50;
-            }
-            
-            .status-indicators {
-                color: #95a5a6;
-            }
-        }
-    </style>
-</head>
-<body>
-    <h1>Marv Marinovich Sprint Test</h1>
-    
-    <div class="sprint-info">
-        <h2>Current Sprint: <span class="sprint-number" id="sprintNumber">1</span></h2>
-        <div class="status" id="status">Ready to start</div>
-        <div class="recovery-progress" id="recoveryProgress">
-            <div class="recovery-bar" id="recoveryBar"></div>
-        </div>
-        <div class="status-indicators">
-            <div class="voice-status">
-                <div class="voice-indicator" id="voiceIndicator"></div>
-                <span id="voiceStatus">Voice commands: disabled</span>
-            </div>
-            <div id="wakelockStatus">Screen wake lock: inactive</div>
-        </div>
-    </div>
-    
-    <div class="timer-display" id="timerDisplay">00:00.0</div>
-    
-    <button class="toggle-button" id="voiceToggle">
-        <span class="icon">🎤</span> Enable Voice Commands
-    </button>
-    
-    <button class="action-button start" id="startButton">START SPRINT</button>
-    <button class="action-button" id="finishButton" style="display:none;">FINISH SPRINT</button>
-    
-    <div class="voice-feedback" id="voiceFeedback">Command recognized!</div>
-    
-    <div class="sprint-results">
-        <h2>Results</h2>
-        <table class="results-table" id="resultsTable">
-            <thead>
-                <tr>
-                    <th>Sprint #</th>
-                    <th>Sprint Time</th>
-                </tr>
-            </thead>
-            <tbody id="resultsBody">
-                <!-- Results will be added here -->
-            </tbody>
-        </table>
-    </div>
-    
-    <script>
-        // DOM Elements
-        const timerDisplay = document.getElementById('timerDisplay');
-        const sprintNumberDisplay = document.getElementById('sprintNumber');
-        const statusDisplay = document.getElementById('status');
-        const startButton = document.getElementById('startButton');
-        const finishButton = document.getElementById('finishButton');
-        const resultsBody = document.getElementById('resultsBody');
-        const recoveryBar = document.getElementById('recoveryBar');
-        const wakelockStatus = document.getElementById('wakelockStatus');
-        const voiceToggle = document.getElementById('voiceToggle');
-        const voiceStatus = document.getElementById('voiceStatus');
-        const voiceIndicator = document.getElementById('voiceIndicator');
-        const voiceFeedback = document.getElementById('voiceFeedback');
-        
-        // Audio elements for notifications
-        const beepSound = new Audio();
-        beepSound.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAFAAAGUACFhYWFhYWFhYWFhYWFhYWFhYWFvb29vb29vb29vb29vb29vb29vb3t7e3t7e3t7e3t7e3t7e3t7e3t7f////////////////////////////////8AAAA8TEFNRTMuOTlyAc0AAAAAAAAAABSAJAJAQgAAgAAABlCt2fMmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwAABpAAAACAAADSAAAAETEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=';
-        
-        const finishSound = new Audio();
-        finishSound.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAALAAAJrwBra2tra2tra2tra2tra2tra2trjo6Ojo6Ojo6Ojo6Ojo6Ojo6OjrW1tbW1tbW1tbW1tbW1tbW1tbXFxcXFxcXFxcXFxcXFxcXFxcXF1dXV1dXV1dXV1dXV1dXV1dXV1eXl5eXl5eXl5eXl5eXl5eXl5eX19fX19fX19fX19fX19fX19fX19f////////////////////////////////8AAAA8TEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//uwxAAAFHHrL/ZkAKRdR6U2dLAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjk5LjVVVVVVVVVVVVVVVVVVVQ==';
-        
-        // Voice recognition feedback sounds
-        const startRecognizedSound = new Audio();
-        startRecognizedSound.src = 'data:audio/mp3;base64,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';
-        
-        const finishRecognizedSound = new Audio();
-        finishRecognizedSound.src = 'data:audio/mp3;base64,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';
-        
-        // Variables for the timer and state
-        let timerInterval;
-        let recoveryInterval;
-        let sprintStartTime;
-        let sprintNumber = 1;
-        let isSprintActive = false;
-        let isRecoveryActive = false;
-        let recoveryTimeLeft = 60;
-        let sprintResults = [];
-        let wakeLock = null;
-        let voiceRecognition = null;
-        let isVoiceEnabled = false;
-        
-        // Check for SpeechRecognition support
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const voiceSupported = !!SpeechRecognition;
-        
-        // Initialize voice recognition if supported
-        function initVoiceRecognition() {
-            if (!voiceSupported) {
-                voiceStatus.textContent = "Voice commands: not supported in this browser";
-                voiceToggle.disabled = true;
-                voiceToggle.textContent = "Voice Not Supported";
-                return;
-            }
-            
-            voiceRecognition = new SpeechRecognition();
-            voiceRecognition.continuous = true;
-            voiceRecognition.interimResults = false;
-            voiceRecognition.lang = 'en-US';
-            
-            voiceRecognition.onresult = (event) => {
-                const last = event.results.length - 1;
-                const command = event.results[last][0].transcript.trim().toLowerCase();
-                
-                console.log("Voice command detected:", command);
-                
-                // Check for start/go command
-                if (isVoiceEnabled && !isSprintActive && !isRecoveryActive && 
-                    (command.includes('start') || command.includes('go'))) {
-                    showVoiceFeedback("START");
-                    startRecognizedSound.play();
-                    setTimeout(() => startSprint(), 500);
-                }
-                
-                // Check for finish/stop/done command
-                if (isVoiceEnabled && isSprintActive && 
-                    (command.includes('finish') || command.includes('stop') || command.includes('done'))) {
-                    showVoiceFeedback("FINISH");
-                    finishRecognizedSound.play();
-                    setTimeout(() => finishSprint(), 500);
-                }
-            };
-            
-            voiceRecognition.onerror = (event) => {
-                console.error("Voice recognition error:", event.error);
-                if (event.error === 'no-speech') {
-                    // Restart recognition if it stops due to no speech
-                    if (isVoiceEnabled) {
-                        voiceRecognition.stop();
-                        setTimeout(() => {
-                            if (isVoiceEnabled) voiceRecognition.start();
-                        }, 100);
-                    }
-                } else if (event.error === 'aborted' || event.error === 'network') {
-                    // Handle network errors or aborts
-                    voiceIndicator.classList.remove('active', 'listening');
-                    voiceStatus.textContent = `Voice commands: error (${event.error})`;
-                    isVoiceEnabled = false;
-                    voiceToggle.classList.remove('active');
-                    voiceToggle.textContent = "🎤 Enable Voice Commands";
-                }
-            };
-            
-            voiceRecognition.onend = () => {
-                // Restart recognition if it ends and is still enabled
-                if (isVoiceEnabled) {
-                    try {
-                        voiceRecognition.start();
-                    } catch (e) {
-                        console.error("Error restarting voice recognition:", e);
-                        // Wait a bit and try again
-                        setTimeout(() => {
-                            if (isVoiceEnabled) voiceRecognition.start();
-                        }, 1000);
-                    }
-                }
-            };
-        }
-        
-        // Toggle voice recognition
-        function toggleVoiceRecognition() {
-            if (!voiceSupported) return;
-            
-            isVoiceEnabled = !isVoiceEnabled;
-            
-            if (isVoiceEnabled) {
-                try {
-                    voiceRecognition.start();
-                    voiceIndicator.classList.add('active', 'listening');
-                    voiceStatus.textContent = "Voice commands: listening";
-                    voiceToggle.classList.add('active');
-                    voiceToggle.textContent = "🎤 Disable Voice Commands";
-                    showVoiceFeedback("Voice Commands Enabled");
-                } catch (e) {
-                    console.error("Error starting voice recognition:", e);
-                    isVoiceEnabled = false;
-                }
-            } else {
-                voiceRecognition.stop();
-                voiceIndicator.classList.remove('active', 'listening');
-                voiceStatus.textContent = "Voice commands: disabled";
-                voiceToggle.classList.remove('active');
-                voiceToggle.textContent = "🎤 Enable Voice Commands";
-            }
-        }
-        
-        // Show voice feedback overlay
-        function showVoiceFeedback(text) {
-            voiceFeedback.textContent = text;
-            voiceFeedback.classList.add('show');
-            setTimeout(() => {
-                voiceFeedback.classList.remove('show');
-            }, 1500);
-        }
-        
-        // Screen Wake Lock API
-        async function requestWakeLock() {
-            if ('wakeLock' in navigator) {
-                try {
-                    // Request a screen wake lock
-                    wakeLock = await navigator.wakeLock.request('screen');
-                    wakelockStatus.textContent = 'Screen wake lock: active';
-                    
-                    // Listen for wake lock release
-                    wakeLock.addEventListener('release', () => {
-                        wakelockStatus.textContent = 'Screen wake lock: inactive';
-                        wakeLock = null;
-                    });
-                    
-                } catch (err) {
-                    wakelockStatus.textContent = `Screen wake lock error: ${err.message}`;
-                }
-            } else {
-                wakelockStatus.textContent = 'Screen wake lock not supported';
-            }
-        }
-        
-        // Release wake lock
-        function releaseWakeLock() {
-            if (wakeLock !== null) {
-                wakeLock.release()
-                    .then(() => {
-                        wakeLock = null;
-                        wakelockStatus.textContent = 'Screen wake lock: released';
-                    });
-            }
-        }
-        
-        // Re-request wake lock on visibility change
-        document.addEventListener('visibilitychange', async () => {
-            if (wakeLock !== null && document.visibilityState === 'visible' && (isSprintActive || isRecoveryActive)) {
-                await requestWakeLock();
-            }
-            
-            // Also restart voice recognition if needed
-            if (isVoiceEnabled && document.visibilityState === 'visible' && voiceSupported) {
-                try {
-                    voiceRecognition.stop();
-                    setTimeout(() => {
-                        if (isVoiceEnabled) voiceRecognition.start();
-                    }, 500);
-                } catch (e) {
-                    console.error("Error restarting voice recognition after visibility change:", e);
-                }
-            }
-        });
-        
-        // Timer with high precision using Performance API
-        let lastTimerUpdate = 0;
-        
-        // Format time as MM:SS.S
-        function formatTime(timeInMs) {
-            const totalSeconds = timeInMs / 1000;
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = Math.floor(totalSeconds % 60);
-            const tenths = Math.floor((totalSeconds % 1) * 10);
-            
-            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths}`;
-        }
-        
-        // Update the timer display with more accurate timing
-        function updateTimer() {
-            if (isSprintActive) {
-                const currentTime = performance.now();
-                // Only update if more than 100ms have passed
-                if (currentTime - lastTimerUpdate >= 100) {
-                    const elapsedTime = new Date().getTime() - sprintStartTime;
-                    timerDisplay.textContent = formatTime(elapsedTime);
-                    lastTimerUpdate = currentTime;
-                }
-                
-                // Use requestAnimationFrame for smoother updates
-                requestAnimationFrame(updateTimer);
-            }
-        }
-        
-        // Store recovery start time to handle app suspension
-        let recoveryStartTime;
-        let recoveryTotalTime = 60000; // 60 seconds in milliseconds
-        
-        // Update the recovery timer with more accurate timing
-        function updateRecoveryTimer() {
-            if (isRecoveryActive) {
-                const currentTime = new Date().getTime();
-                const elapsedTime = currentTime - recoveryStartTime;
-                const remainingTime = Math.max(0, recoveryTotalTime - elapsedTime);
-                recoveryTimeLeft = Math.ceil(remainingTime / 1000);
-                
-                // Update progress bar
-                const progressPercent = (elapsedTime / recoveryTotalTime) * 100;
-                recoveryBar.style.width = `${Math.min(100, progressPercent)}%`;
-                
-                timerDisplay.textContent = formatTime(remainingTime);
-                
-                if (remainingTime <= 0) {
-                    // Recovery period is over, prepare for next sprint
-                    clearInterval(recoveryInterval);
-                    isRecoveryActive = false;
-                    beepSound.play();
-                    
-                    // Change button back to start sprint
-                    startButton.style.display = "block";
-                    startButton.textContent = `START SPRINT ${sprintNumber}`;
-                    finishButton.style.display = "none";
-                    
-                    statusDisplay.textContent = "Ready for next sprint";
-                    statusDisplay.style.color = "#e74c3c";
-                    timerDisplay.textContent = "00:00.0";
-                    
-                    // We can release the wake lock now if not continuing immediately
-                    setTimeout(releaseWakeLock, 5000);
-                    
-                } else if (recoveryTimeLeft <= 5) {
-                    // Play beep for the last 5 seconds
-                    beepSound.play();
-                }
-            }
-        }
-        
-        // Start a sprint
-        async function startSprint() {
-            isSprintActive = true;
-            isRecoveryActive = false;
-            sprintStartTime = new Date().getTime();
-            
-            // Acquire screen wake lock
-            await requestWakeLock();
-            
-            // Hide start button, show finish button
-            startButton.style.display = "none";
-            finishButton.style.display = "block";
-            
-            // Reset recovery progress bar
-            recoveryBar.style.width = "0%";
-            
-            // Start the timer using requestAnimationFrame for better performance
-            lastTimerUpdate = performance.now();
-            requestAnimationFrame(updateTimer);
-            
-            statusDisplay.textContent = `Sprint ${sprintNumber} in progress`;
-            statusDisplay.style.color = "";
-        }
-        
-        // Finish a sprint
-        function finishSprint() {
-            if (!isSprintActive) return;
-            
-            isSprintActive = false;
-            
-            const currentTime = new Date().getTime();
-            const sprintTime = currentTime - sprintStartTime;
-            
-            // Save the result
-            sprintResults.push({
-                number: sprintNumber,
-                time: sprintTime
-            });
-            
-            // Add the result to the table
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${sprintNumber}</td>
-                <td>${formatTime(sprintTime)}</td>
-            `;
-            resultsBody.appendChild(row);
-            
-            // Play finish sound
-            finishSound.play();
-            
-            // Increment sprint number for next sprint
-            sprintNumber++;
-            sprintNumberDisplay.textContent = sprintNumber;
-            
-            // Start recovery period
-            startRecovery();
-        }
-        
-        // Start the recovery period
-        function startRecovery() {
-            isRecoveryActive = true;
-            recoveryStartTime = new Date().getTime();
-            recoveryTimeLeft = 60;
-            
-            statusDisplay.textContent = "Recovery in progress - jog back to start";
-            finishButton.style.display = "none";
-            
-            // Start the recovery timer
-            clearInterval(recoveryInterval);
-            recoveryInterval = setInterval(updateRecoveryTimer, 250); // More frequent updates
-            updateRecoveryTimer(); // Update immediately
-        }
-        
-        // Reset the test
-        function resetTest() {
-            clearInterval(recoveryInterval);
-            
-            isSprintActive = false;
-            isRecoveryActive = false;
-            sprintNumber = 1;
-            sprintNumberDisplay.textContent = sprintNumber;
-            
-            statusDisplay.textContent = "Ready to start";
-            timerDisplay.textContent = "00:00.0";
-            
-            startButton.style.display = "block";
-            startButton.textContent = "START SPRINT";
-            finishButton.style.display = "none";
-            
-            recoveryBar.style.width = "0%";
-            
-            resultsBody.innerHTML = "";
-            sprintResults = [];
-            
-            // Release wake lock when not in use
-            releaseWakeLock();
-        }
-        
-        // Save data to localStorage when app is closing or in background
-        function saveState() {
-            const state = {
-                sprintNumber,
-                isSprintActive,
-                isRecoveryActive,
-                sprintStartTime,
-                recoveryStartTime,
-                recoveryTotalTime,
-                sprintResults,
-                isVoiceEnabled
-            };
-            localStorage.setItem('sprintTestState', JSON.stringify(state));
-        }
-        
-        // Load data from localStorage when app starts
-        function loadState() {
-            const savedState = localStorage.getItem('sprintTestState');
-            if (savedState) {
-                try {
-                    const state = JSON.parse(savedState);
-                    
-                    // Check if a session was in progress
-                    if (state.isSprintActive || state.isRecoveryActive) {
-                        const currentTime = new Date().getTime();
-                        
-                        if (state.isSprintActive) {
-                            // Resume sprint timer
-                            sprintStartTime = state.sprintStartTime;
-                            sprintNumber = state.sprintNumber;
-                            isSprintActive = true;
-                            
-                            // Show finish button
-                            startButton.style.display = "none";
-                            finishButton.style.display = "block";
-                            
-                            // Start timer
-                            requestAnimationFrame(updateTimer);
-                            
-                            statusDisplay.textContent = `Sprint ${sprintNumber} in progress`;
-                            sprintNumberDisplay.textContent = sprintNumber;
-                            
-                        } else if (state.isRecoveryActive) {
-                            // Resume recovery timer
-                            recoveryStartTime = state.recoveryStartTime;
-                            sprintNumber = state.sprintNumber;
-                            isRecoveryActive = true;
-                            
-                            // Hide finish button
-                            startButton.style.display = "none";
-                            finishButton.style.display = "none";
-                            
-                            // Start recovery timer
-                            recoveryInterval = setInterval(updateRecoveryTimer, 250);
-                            updateRecoveryTimer();
-                            
-                            statusDisplay.textContent = "Recovery in progress - jog back to start";
-                            sprintNumberDisplay.textContent = sprintNumber;
-                        }
-                        
-                        // Request wake lock
-                        requestWakeLock();
-                    }
-                    
-                    // Load sprint results
-                    if (state.sprintResults && state.sprintResults.length > 0) {
-                        sprintResults = state.sprintResults;
-                        
-                        // Populate results table
-                        resultsBody.innerHTML = "";
-                        sprintResults.forEach(result => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${result.number}</td>
-                                <td>${formatTime(result.time)}</td>
-                            `;
-                            resultsBody.appendChild(row);
-                        });
-                    }
-                    
-                    // Restore voice state if it was enabled
-                    if (state.isVoiceEnabled && voiceSupported) {
-                        // We'll enable voice after a short delay to ensure the page is fully loaded
-                        setTimeout(() => {
-                            if (!isVoiceEnabled) toggleVoiceRecognition();
-                        }, 1000);
-                    }
-                    
-                } catch (e) {
-                    console.error("Error loading saved state:", e);
-                    // Clear corrupted state
-                    localStorage.removeItem('sprintTestState');
-                }
-            }
-        }
-        
-        // Save state when page is hidden or unloaded
-        window.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                saveState();
-            }
-        });
-        
-        window.addEventListener('beforeunload', saveState);
-        
-        // Event listeners for buttons with both click and touch support
-        startButton.addEventListener('click', startSprint);
-        startButton.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+    };
+
+    // DOM Element References
+    const dom = {
+        timerDisplay: document.getElementById('timerDisplay'),
+        sprintNumberDisplay: document.getElementById('sprintNumber'),
+        statusDisplay: document.getElementById('status'),
+        startButton: document.getElementById('startButton'),
+        finishButton: document.getElementById('finishButton'),
+        resultsBody: document.getElementById('resultsBody'),
+        recoveryBar: document.getElementById('recoveryBar'),
+        wakelockStatus: document.getElementById('wakelockStatus'),
+        voiceToggle: document.getElementById('voiceToggle'),
+        voiceStatus: document.getElementById('voiceStatus'),
+        voiceIndicator: document.getElementById('voiceIndicator'),
+        voiceFeedback: document.getElementById('voiceFeedback')
+    };
+
+    // Audio elements
+    const audio = {
+        beep: new Audio(config.audioBase64.beep),
+        finish: new Audio(config.audioBase64.finish),
+        startRecognized: new Audio(config.audioBase64.startRecognized),
+        finishRecognized: new Audio(config.audioBase64.finishRecognized)
+    };
+
+    // State variables
+    let timerInterval;
+    let recoveryInterval;
+    let sprintStartTime;
+    let sprintNumber = 1;
+    let recoveryTimeLeft = config.recoveryTime;
+    let sprintResults = [];
+    let wakeLock = null;
+    let voiceRecognition = null;
+    let isVoiceEnabled = false;
+    const voiceSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    let currentState = 'ready'; // 'ready', 'sprinting', 'recovering'
+
+    // --- Helper Functions ---
+
+    const formatTime = (timeInMs) => {
+        const totalSeconds = timeInMs / 1000;
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+        const tenths = Math.floor((totalSeconds % 1) * 10);
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${tenths}`;
+    };
+
+    const updateVoiceUI = (enabled, statusText) => {
+        dom.voiceIndicator.classList.toggle('active', enabled);
+        dom.voiceIndicator.classList.toggle('listening', enabled);
+        dom.voiceToggle.classList.toggle('active', enabled);
+        dom.voiceToggle.textContent = enabled ? "🎤 Disable Voice Commands" : "🎤 Enable Voice Commands";
+        dom.voiceStatus.textContent = statusText;
+    };
+
+    const showVoiceFeedback = (text) => {
+        dom.voiceFeedback.textContent = text;
+        dom.voiceFeedback.classList.add('show');
+        setTimeout(() => dom.voiceFeedback.classList.remove('show'), 1500);
+    };
+
+    const addResultToTable = (sprintNum, sprintTime) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${sprintNum}</td><td>${sprintTime}</td>`;
+        dom.resultsBody.appendChild(row);
+    };
+
+    const updateTimerDisplay = (time) => {
+        dom.timerDisplay.textContent = formatTime(time);
+    };
+
+    const updateStatusDisplay = (text, isError = false) => {
+        dom.statusDisplay.textContent = text;
+        dom.statusDisplay.style.color = isError ? "#e74c3c" : "";
+    };
+
+    const toggleButtonVisibility = (isStartVisible) => {
+        dom.startButton.style.display = isStartVisible ? "block" : "none";
+        dom.finishButton.style.display = isStartVisible ? "none" : "block";
+    };
+
+    const resetRecoveryProgress = () => {
+        dom.recoveryBar.style.width = "0%";
+    };
+
+    // --- Voice Recognition ---
+
+    const handleVoiceCommand = (command) => {
+        if (command.includes('start') || command.includes('go')) {
+            showVoiceFeedback("START");
+            audio.startRecognized.play();
             startSprint();
-        });
-        
-        finishButton.addEventListener('click', finishSprint);
-        finishButton.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            return true;
+        }
+        if (command.includes('finish') || command.includes('stop') || command.includes('done')) {
+            showVoiceFeedback("FINISH");
+            audio.finishRecognized.play();
             finishSprint();
-        });
-        
-        voiceToggle.addEventListener('click', toggleVoiceRecognition);
-        voiceToggle.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            toggleVoiceRecognition();
-        });
-        
-        // Double-tap anywhere to reset (for convenience)
-        let lastTap = 0;
-        document.addEventListener('touchend', function(e) {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            if (tapLength < 500 && tapLength > 0) {
-                // Double tap detected
-                if (confirm("Reset the test?")) {
-                    resetTest();
-                }
+            return true;
+        }
+        return false;
+    };
+
+    const handleVoiceResult = (event) => {
+        if (!isVoiceEnabled) return;
+        const command = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+        console.log("Voice command detected:", command);
+
+        if (currentState === 'ready' || currentState === 'sprinting') {
+            handleVoiceCommand(command);
+        }
+    };
+
+    const handleVoiceError = (event) => {
+        console.error("Voice recognition error:", event.error);
+        if (event.error === 'no-speech' && isVoiceEnabled) {
+            voiceRecognition.stop();
+            setTimeout(() => voiceRecognition.start(), 100);
+        } else if (event.error === 'aborted' || event.error === 'network') {
+            updateVoiceUI(false, `Voice commands: error (${event.error})`);
+        }
+    };
+
+    const handleVoiceEnd = () => {
+        if (isVoiceEnabled) {
+            try {
+                voiceRecognition.start();
+            } catch (e) {
+                console.error("Error restarting voice recognition:", e);
+                setTimeout(() => voiceRecognition.start(), 1000);
             }
-            lastTap = currentTime;
-        });
-        
-        // Initialize voice recognition
-        document.addEventListener('DOMContentLoaded', () => {
-            initVoiceRecognition();
-            loadState();
-        });
-    </script>
-</body>
-</html>
+        }
+    };
+
+    const initVoiceRecognition = () => {
+        if (!voiceSupported) {
+            dom.voiceStatus.textContent = "Voice commands: not supported in this browser";
+            dom.voiceToggle.disabled = true;
+            dom.voiceToggle.textContent = "Voice Not Supported";
+            return;
+        }
+
+        voiceRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        voiceRecognition.continuous = true;
+        voiceRecognition.interimResults = false;
+        voiceRecognition.lang = 'en-US';
+        voiceRecognition.onresult = handleVoiceResult;
+        voiceRecognition.onerror = handleVoiceError;
+        voiceRecognition.onend = handleVoiceEnd;
+    };
+
+    const toggleVoiceRecognition = () => {
+        if (!voiceSupported) return;
+        isVoiceEnabled = !isVoiceEnabled;
+        updateVoiceUI(isVoiceEnabled, isVoiceEnabled ? "Voice commands: listening" : "Voice commands: disabled");
+        try {
+            isVoiceEnabled ? voiceRecognition.start() : voiceRecognition.stop();
+            if (isVoiceEnabled) showVoiceFeedback("Voice Commands Enabled");
+        } catch (e) {
+            console.error("Error toggling voice recognition:", e);
+            isVoiceEnabled = false;
+            updateVoiceUI(false, "Voice commands: disabled");
+        }
+    };
+
+    // --- Screen Wake Lock ---
+
+    const requestWakeLock = async () => {
+        if ('wakeLock' in navigator) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+                dom.wakelockStatus.textContent = 'Screen wake lock: active';
+                wakeLock.addEventListener('release', () => {
+                    dom.wakelockStatus.textContent = 'Screen wake lock: inactive';
+                    wakeLock = null;
+                });
+            } catch (err) {
+                dom.wakelockStatus.textContent = `Screen wake lock error: ${err.message}`;
+            }
+        } else {
+            dom.wakelockStatus.textContent = 'Screen wake lock not supported';
+        }
+    };
+
+    const releaseWakeLock = () => {
+        if (wakeLock) {
+            wakeLock.release().then(() => {
+                wakeLock = null;
+                dom.wakelockStatus.textContent = 'Screen wake lock: released';
+            });
+        }
+    };
+
+    document.addEventListener('visibilitychange', async () => {
+        if (wakeLock && document.visibilityState === 'visible' && (currentState === 'sprinting' || currentState === 'recovering')) {
+            await requestWakeLock();
+        }
+        if (isVoiceEnabled && document.visibilityState === 'visible' && voiceSupported) {
+            // Re-evaluating the need to restart immediately.
+            // It might be better to rely on the 'end' event of the recognition
+            // or a more deliberate re-initialization if needed.
+            // For now, keeping the restart with a slight delay.
+            try {
+                voiceRecognition.stop();
+                setTimeout(() => { if (isVoiceEnabled) voiceRecognition.start(); }, 500);
+            } catch (e) {
+                console.error("Error restarting voice recognition after visibility change:", e);
+            }
+        }
+    });
+
+    // --- Timer Management ---
+
+    let lastTimerUpdate = 0;
+
+    const updateSprintTimer = () => {
+        if (currentState === 'sprinting') {
+            const currentTime = performance.now();
+            if (currentTime - lastTimerUpdate >= 100) {
+                const elapsedTime = currentTime - sprintStartTime;
+                updateTimerDisplay(elapsedTime);
+                lastTimerUpdate = currentTime;
+            }
+            requestAnimationFrame(updateSprintTimer);
+        }
+    };
+
+    let recoveryStartTime;
+    const recoveryTotalTime = config.recoveryTime * 1000;
+
+    const updateRecoveryTimer = () => {
+        if (currentState === 'recovering') {
+            const currentTime = new Date().getTime();
+            const elapsedTime = currentTime - recoveryStartTime;
+            const remainingTime = Math.max(0, recoveryTotalTime - elapsedTime);
+            recoveryTimeLeft = Math.ceil(remainingTime / 1000);
+
+            const progressPercent = (elapsedTime / recoveryTotalTime) * 100;
+            dom.recoveryBar.style.width = `${Math.min(100, progressPercent)}%`;
+            updateTimerDisplay(remainingTime);
+
+            if (remainingTime <= 0) {
+                clearInterval(recoveryInterval);
+                currentState = 'ready';
+                audio.beep.play();
+                prepareForNextSprint();
+                setTimeout(releaseWakeLock, 5000);
+            } else if (recoveryTimeLeft <= 5) {
+                audio.beep.play();
+            }
+        }
+    };
+
+    // --- Sprint Flow ---
+
+    const startSprint = async () => {
+        if (currentState !== 'ready') return;
+        currentState = 'sprinting';
+        sprintStartTime = performance.now();
+
+        await requestWakeLock();
+
+        toggleButtonVisibility(false);
+        resetRecoveryProgress();
+        lastTimerUpdate = performance.now();
+        requestAnimationFrame(updateSprintTimer);
+        updateStatusDisplay(`Sprint ${sprintNumber} in progress`);
+    };
+
+    const finishSprint = () => {
+        if (currentState !== 'sprinting') return;
+        currentState = 'recovering';
+        const sprintTime = performance.now() - sprintStartTime;
+        sprintResults.push({ number: sprintNumber, time: sprintTime });
+        addResultToTable(sprintNumber, formatTime(sprintTime));
+        audio.finish.play();
+        sprintNumber++;
+        dom.sprintNumberDisplay.textContent = sprintNumber;
+        startRecovery();
+    };
+
+    const prepareForNextSprint = () => {
+        currentState = 'ready';
+        toggleButtonVisibility(true);
+        dom.startButton.textContent = `START SPRINT ${sprintNumber}`;
+        updateStatusDisplay("Ready for next sprint", true);
+        updateTimerDisplay(0);
+    };
+
+    const startRecovery = () => {
+        if (currentState !== 'recovering') return;
+        recoveryStartTime = new Date().getTime();
+        recoveryTimeLeft = config.recoveryTime;
+        updateStatusDisplay("Recovery in progress - jog back to start");
+        toggleButtonVisibility(false);
+        clearInterval(recoveryInterval);
+        recoveryInterval = setInterval(updateRecoveryTimer, 250);
+        updateRecoveryTimer();
+    };
+
+    const resetTest = () => {
+        clearInterval(recoveryInterval);
+        currentState = 'ready';
+        sprintNumber = 1;
+        dom.sprintNumberDisplay.textContent = sprintNumber;
+        updateStatusDisplay("Ready to start");
+        updateTimerDisplay(0);
+        toggleButtonVisibility(true);
+        dom.startButton.textContent = "START SPRINT";
+        resetRecoveryProgress();
+        dom.resultsBody.innerHTML = "";
+        sprintResults = [];
+        releaseWakeLock();
+    };
+
+    // --- Data Persistence ---
+
+    const saveState = () => {
+        const state = {
+            sprintNumber,
+            currentState,
+            sprintStartTime,
+            recoveryStartTime,
+            recoveryTotalTime: config.recoveryTime * 1000,
+            sprintResults,
+            isVoiceEnabled
+        };
+        localStorage.setItem('sprintTestState', JSON.stringify(state));
+    };
+
+    const loadState = () => {
+        const savedState = localStorage.getItem('sprintTestState');
+        if (savedState) {
+            try {
+                const state = JSON.parse(savedState);
+                sprintNumber = state.sprintNumber;
+                currentState = state.currentState;
+                sprintStartTime = state.sprintStartTime;
+                recoveryStartTime = state.recoveryStartTime;
+                recoveryTimeLeft = Math.ceil((state.recoveryTotalTime - (new Date().getTime() - state.recoveryStartTime)) / 1000);
+                sprintResults = state.sprintResults;
+                isVoiceEnabled = state.isVoiceEnabled;
+
+                dom.sprintNumberDisplay.textContent = sprintNumber;
+
+                switch (currentState) {
+                    case 'sprinting':
+                        toggleButtonVisibility(false);
+                        requestAnimationFrame(updateSprintTimer);
+                        updateStatusDisplay(`Sprint ${sprintNumber} in progress`);
+                        break;
+                    case 'recovering':
+                        toggleButtonVisibility(false);
+                        clearInterval(recoveryInterval);
+                        recoveryInterval = setInterval(updateRecoveryTimer, 250);
+                        updateRecoveryTimer();
+                        updateStatusDisplay("Recovery in progress - jog back to start");
+                        break;
+                    default: // 'ready'
+                        prepareForNextSprint();
+                }
+
+                sprintResults.forEach(result => addResultToTable(result.number, formatTime(result.time)));
+                updateVoiceUI(isVoiceEnabled, isVoiceEnabled ? "Voice commands: listening" : "Voice commands: disabled");
+
+            } catch (error) {
+                console.error("Error loading state:", error);
+            }
+        } else {
+            prepareForNextSprint();
+        }
+    };
+
+    // --- Initialization ---
+
+    initVoiceRecognition();
+    loadState();
+});
